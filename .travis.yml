@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+- '0.10'
+notifications:
+  hipchat:
+    rooms:
+      secure: aa4f5BaaIGATwpcY3vbeLSEm/HQafXwo+BbnaL2bwgfPuXjzAhxu6fd4j9IoCN39oK9wfQ85lY1cbzaOddhhOt+RRzEGmTxwm5ae+wrff27IhVhaMV55/0EAVH1Lvl0+HEp9nAkzBs0jczl6XXq+6KEnOr+waJ0w1xtMmV0hlPBgVzXCyJXt9WEcuHRr9QPAeyB/RMM/lpNOiY6SS59PvaVLCd0utXZoq1ZptO5m0Cop8pxvtFtzU3ETvPKH3SYRTQcwJO5h2VVl92rqq+zqu1ZvIQlmbssNy60fSGiS0D4JuYjRvOGjDGW4OovW9tb+tjlKVTbrstP/pIZm8EsxORSd+bnV1VsCdJiuUUEoQu+UD76iG+3UTSpNTXcEBHlr5n5+n0YTCaz3M6jzP35b5Xwoi6hyDgC8fS/m2BeXnT2pSHSl/qoNIMQHQSrl/B3zjh5O/dEB+sNq0X1QDtjciNbXw1jNWQnrTohYQCw0x4uONSxQwW+xGDk883MoIX9Z72Av4fU6S0ixvBKuCKcuwnUHbF7oixTI1HuNS6kk+k+0NiIoZ3DFYCEZTHTw0ZR0c57qJFMdIw/B4aLPBenUvkH+Z+o65KOQwdQ0vpk7ublRwZ+xCI/NFO6DshnP1sSIO+ruyHjqNGWZOezFwhNc9qm/FdIBcBuCPhfkOkBy6f8=
