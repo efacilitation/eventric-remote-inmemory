@@ -1,0 +1,114 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/Users/alexlawrence/.nvm/v0.10.29/bin/node',
+1 verbose cli   '/Users/alexlawrence/.nvm/v0.10.29/bin/npm',
+1 verbose cli   'publish' ]
+2 info using npm@1.4.14
+3 info using node@v0.10.29
+4 verbose publish [ '.' ]
+5 verbose cache add [ '.', null ]
+6 verbose cache add name=undefined spec="." args=[".",null]
+7 verbose parsed url { protocol: null,
+7 verbose parsed url   slashes: null,
+7 verbose parsed url   auth: null,
+7 verbose parsed url   host: null,
+7 verbose parsed url   port: null,
+7 verbose parsed url   hostname: null,
+7 verbose parsed url   hash: null,
+7 verbose parsed url   search: null,
+7 verbose parsed url   query: null,
+7 verbose parsed url   pathname: '.',
+7 verbose parsed url   path: '.',
+7 verbose parsed url   href: '.' }
+8 silly lockFile 3a52ce78- .
+9 verbose lock . /Users/alexlawrence/.npm/3a52ce78-.lock
+10 verbose tar pack [ '/Users/alexlawrence/.npm/eventric-remote-inmemory/0.1.0/package.tgz',
+10 verbose tar pack   '.' ]
+11 verbose tarball /Users/alexlawrence/.npm/eventric-remote-inmemory/0.1.0/package.tgz
+12 verbose folder .
+13 info prepublish eventric-remote-inmemory@0.1.0
+14 verbose unsafe-perm in lifecycle true
+15 silly lockFile 1f1177db-tar tar://.
+16 verbose lock tar://. /Users/alexlawrence/.npm/1f1177db-tar.lock
+17 silly lockFile d5e4c9a9-emote-inmemory-0-1-0-package-tgz tar:///Users/alexlawrence/.npm/eventric-remote-inmemory/0.1.0/package.tgz
+18 verbose lock tar:///Users/alexlawrence/.npm/eventric-remote-inmemory/0.1.0/package.tgz /Users/alexlawrence/.npm/d5e4c9a9-emote-inmemory-0-1-0-package-tgz.lock
+19 silly lockFile 1f1177db-tar tar://.
+20 silly lockFile 1f1177db-tar tar://.
+21 silly lockFile d5e4c9a9-emote-inmemory-0-1-0-package-tgz tar:///Users/alexlawrence/.npm/eventric-remote-inmemory/0.1.0/package.tgz
+22 silly lockFile d5e4c9a9-emote-inmemory-0-1-0-package-tgz tar:///Users/alexlawrence/.npm/eventric-remote-inmemory/0.1.0/package.tgz
+23 silly lockFile ac2351c7-ic-remote-inmemory-0-1-0-package /Users/alexlawrence/.npm/eventric-remote-inmemory/0.1.0/package
+24 verbose lock /Users/alexlawrence/.npm/eventric-remote-inmemory/0.1.0/package /Users/alexlawrence/.npm/ac2351c7-ic-remote-inmemory-0-1-0-package.lock
+25 silly lockFile ac2351c7-ic-remote-inmemory-0-1-0-package /Users/alexlawrence/.npm/eventric-remote-inmemory/0.1.0/package
+26 silly lockFile ac2351c7-ic-remote-inmemory-0-1-0-package /Users/alexlawrence/.npm/eventric-remote-inmemory/0.1.0/package
+27 silly lockFile 3a52ce78- .
+28 silly lockFile 3a52ce78- .
+29 silly publish { name: 'eventric-remote-inmemory',
+29 silly publish   description: 'eventric InMemory Remote',
+29 silly publish   keywords: [ 'eventric', 'eventric-remote', 'inmemory' ],
+29 silly publish   author: { name: 'efa team', email: 'team@efa-gmbh.com' },
+29 silly publish   version: '0.1.0',
+29 silly publish   repository:
+29 silly publish    { type: 'git',
+29 silly publish      url: 'https://github.com/efacilitation/eventric-remote-inmemory.git' },
+29 silly publish   main: 'dist/release/eventric_remote_inmemory.js',
+29 silly publish   scripts: { test: 'gulp specs', prepublish: 'gulp build' },
+29 silly publish   devDependencies:
+29 silly publish    { chai: '3.2.0',
+29 silly publish      'coffee-loader': '0.7.2',
+29 silly publish      'coffee-script': '1.9.3',
+29 silly publish      'es6-promise': '2.3.0',
+29 silly publish      gulp: '3.9.0',
+29 silly publish      'gulp-karma': '0.0.4',
+29 silly publish      'gulp-mocha': '2.1.3',
+29 silly publish      'gulp-util': '3.0.6',
+29 silly publish      'karma-mocha': '0.1.10',
+29 silly publish      'karma-phantomjs-launcher': '0.2.0',
+29 silly publish      'karma-spec-reporter': '0.0.19',
+29 silly publish      'run-sequence': '1.1.2',
+29 silly publish      sinon: 'git://github.com/cjohansen/Sinon.JS#sinon-2.0',
+29 silly publish      'sinon-chai': '2.8.0',
+29 silly publish      'webpack-stream': '2.1.0' },
+29 silly publish   gitHead: '2c239960b7c6837ccaa78682b76a0395eb7cee2c',
+29 silly publish   bugs: { url: 'https://github.com/efacilitation/eventric-remote-inmemory/issues' },
+29 silly publish   readme: 'ERROR: No README data found!',
+29 silly publish   homepage: 'https://github.com/efacilitation/eventric-remote-inmemory',
+29 silly publish   _id: 'eventric-remote-inmemory@0.1.0',
+29 silly publish   _shasum: 'd9090e06450dd6cfa84f2f341a6d5423873fa291',
+29 silly publish   _from: '.' }
+30 verbose url raw eventric-remote-inmemory
+31 verbose url resolving [ 'https://registry.npmjs.org/', './eventric-remote-inmemory' ]
+32 verbose url resolved https://registry.npmjs.org/eventric-remote-inmemory
+33 info trying registry request attempt 1 at 11:26:58
+34 http PUT https://registry.npmjs.org/eventric-remote-inmemory
+35 http 403 https://registry.npmjs.org/eventric-remote-inmemory
+36 verbose headers { 'content-type': 'application/json',
+36 verbose headers   'cache-control': 'max-age=60',
+36 verbose headers   'content-length': '95',
+36 verbose headers   'accept-ranges': 'bytes',
+36 verbose headers   date: 'Tue, 04 Aug 2015 09:27:01 GMT',
+36 verbose headers   via: '1.1 varnish',
+36 verbose headers   connection: 'keep-alive',
+36 verbose headers   'x-served-by': 'cache-fra1245-FRA',
+36 verbose headers   'x-cache': 'MISS',
+36 verbose headers   'x-cache-hits': '0',
+36 verbose headers   'x-timer': 'S1438680419.413512,VS0,VE2014' }
+37 error publish Failed PUT 403
+38 error Error: "You cannot publish over the previously published version 0.1.0." : eventric-remote-inmemory
+38 error     at RegClient.<anonymous> (/Users/alexlawrence/.nvm/v0.10.29/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:274:14)
+38 error     at Request._callback (/Users/alexlawrence/.nvm/v0.10.29/lib/node_modules/npm/node_modules/npm-registry-client/lib/request.js:212:65)
+38 error     at Request.self.callback (/Users/alexlawrence/.nvm/v0.10.29/lib/node_modules/npm/node_modules/request/request.js:123:22)
+38 error     at Request.emit (events.js:98:17)
+38 error     at Request.<anonymous> (/Users/alexlawrence/.nvm/v0.10.29/lib/node_modules/npm/node_modules/request/request.js:893:14)
+38 error     at Request.emit (events.js:117:20)
+38 error     at IncomingMessage.<anonymous> (/Users/alexlawrence/.nvm/v0.10.29/lib/node_modules/npm/node_modules/request/request.js:844:12)
+38 error     at IncomingMessage.emit (events.js:117:20)
+38 error     at _stream_readable.js:929:16
+38 error     at process._tickCallback (node.js:419:13)
+39 error If you need help, you may report this *entire* log,
+39 error including the npm and node versions, at:
+39 error     <http://github.com/npm/npm/issues>
+40 error System Darwin 13.1.0
+41 error command "/Users/alexlawrence/.nvm/v0.10.29/bin/node" "/Users/alexlawrence/.nvm/v0.10.29/bin/npm" "publish"
+42 error cwd /Users/alexlawrence/projects/efa/sixsteps/sources/eventric-remote-inmemory
+43 error node -v v0.10.29
+44 error npm -v 1.4.14
+45 verbose exit [ 1, true ]

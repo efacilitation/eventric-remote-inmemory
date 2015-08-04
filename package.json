@@ -14,7 +14,8 @@
   },
   "main": "dist/release/eventric_remote_inmemory.js",
   "scripts": {
-    "test": "node_modules/.bin/gulp specs"
+    "test": "node_modules/.bin/gulp specs",
+    "prepublish": "node_modules/.bin/gulp build"
   },
   "devDependencies": {
     "chai": "3.2.0",

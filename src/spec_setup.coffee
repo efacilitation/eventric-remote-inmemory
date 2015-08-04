@@ -9,6 +9,5 @@ root = if window? then window else global
 root.expect = chai.expect
 root.sandbox   = sinon.sandbox.create()
 
-
 afterEach ->
   sandbox.restore()
