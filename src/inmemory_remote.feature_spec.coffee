@@ -11,3 +11,13 @@ describe 'inmemory remote', ->
       inmemoryRemote.client.rpc rpcRequest
       .then ->
         expect(rpcHandlerStub).to.have.been.calledWith rpcRequest
+
+
+  describe 'publishing an event from the endpoint', ->
+
+    it 'should inform all subscribers for this event', (done) ->
+      payload = {}
+      inmemoryRemote.client.subscribe 'Context', 'SomeEvent', 'aggregate-1', (receivedPayload) ->
+        expect(receivedPayload).to.equal payload
+        done()
+      inmemoryRemote.endpoint.publish 'Context', 'SomeEvent', 'aggregate-1', payload
