@@ -1,6 +1,6 @@
 describe 'inmemory remote', ->
 
-  inmemoryRemote = require './index'
+  inmemoryRemote = require './'
 
   describe 'executing a rpc from the client', ->
 

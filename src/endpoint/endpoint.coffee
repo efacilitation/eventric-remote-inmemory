@@ -1,4 +1,4 @@
-pubSub = require './pub_sub'
+pubSub = require '../pub_sub'
 
 class InMemoryRemoteEndpoint
 

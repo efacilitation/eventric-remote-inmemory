@@ -1,10 +1,10 @@
-endpoint = require './endpoint'
-pubSub = require './pub_sub'
+endpoint = require '../endpoint'
+pubSub = require '../pub_sub'
 
 class InMemoryRemoteClient
 
   rpc: (rpcRequest) ->
-    new Promise (resolve, reject) =>
+    new Promise (resolve, reject) ->
       endpoint.handleRPCRequest rpcRequest, (error, result) ->
         if error
           reject error

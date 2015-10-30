@@ -7,6 +7,5 @@ gulp.on 'task_err', (error) ->
     gutil.log error
     process.exit 1
 
-
 require('./gulp/specs')(gulp)
 require('./gulp/build')(gulp)
