@@ -1,6 +1,11 @@
 describe 'inmemory remote', ->
 
-  inmemoryRemote = require './'
+  inmemoryRemote = null
+
+  beforeEach ->
+    delete require.cache[require.resolve './']
+    inmemoryRemote = require './'
+
 
   describe 'executing a rpc from the client', ->
 
@@ -21,3 +26,14 @@ describe 'inmemory remote', ->
         expect(receivedPayload).to.equal payload
         done()
       inmemoryRemote.endpoint.publish 'Context', 'SomeEvent', 'aggregate-1', payload
+
+
+  describe 'destroying an endpoint', ->
+
+    it 'should publish all pending messages before resolving the destroy operation', ->
+      subscriberFunction = sandbox.stub()
+      inmemoryRemote.client.subscribe 'Context', 'SomeEvent', subscriberFunction
+      inmemoryRemote.endpoint.publish 'Context', 'SomeEvent', {}
+      inmemoryRemote.endpoint.destroy()
+      .then ->
+        expect(subscriberFunction).to.have.been.called
