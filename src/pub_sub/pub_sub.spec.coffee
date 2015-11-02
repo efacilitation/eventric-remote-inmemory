@@ -3,6 +3,7 @@ describe 'PubSub', ->
   pubSub = null
 
   beforeEach ->
+    delete require.cache[require.resolve './pub_sub']
     pubSub = require './pub_sub'
 
 
@@ -20,71 +21,178 @@ describe 'PubSub', ->
 
   describe '#publish', ->
 
-    it 'should execute subscriber functions which subscribed for the published event', ->
-      spy1 = sandbox.spy()
-      spy2 = sandbox.spy()
-      payload1 = {1: 1}
-      payload2 = {2: 2}
-
-      pubSub.subscribe 'Event1', spy1
-      pubSub.subscribe 'Event2', spy2
-
-      pubSub.publish 'Event1', payload1
-      pubSub.publish 'Event2', payload2
-
-      expect(spy1).to.have.been.calledWith payload1
-      expect(spy2).to.have.been.calledWith payload2
-
-
-    it 'should not execute subscriber functions which subscribed for other events', ->
-      subscriberSpy = sandbox.spy()
-      pubSub.subscribe 'Event1', subscriberSpy
-      pubSub.publish 'Event2', {}
-      expect(subscriberSpy).not.to.have.been.called
-
-
-    it 'should wait to resolve for the executed subscriber functions given they return promises', ->
-      subscriberStub1 = sandbox.stub().returns new Promise (resolve) -> setTimeout resolve, 15
-      subscriberStub2 = sandbox.stub().returns new Promise (resolve) -> setTimeout resolve, 15
-
-      pubSub.subscribe 'Event1', subscriberStub1
-      pubSub.subscribe 'Event1', subscriberStub2
-
-      pubSub.publish 'Event1', {}
+    it 'should call a subscriber function with the event payload given it subscribed for the matching event name', ->
+      payload = {}
+      subscriberFunction = sandbox.stub()
+      pubSub.subscribe 'event', subscriberFunction
       .then ->
-        expect(subscriberStub1).to.have.been.called
-        expect(subscriberStub2).to.have.been.called
+        pubSub.publish 'event', payload
+      .then ->
+        expect(subscriberFunction).to.have.been.calledWith payload
 
 
-    it 'should execute all subscriber functions in parallel even if they are asynchronous', ->
-      subscriberStub1 = sandbox.stub().returns new Promise ->
-      subscriberStub2 = sandbox.stub().returns new Promise ->
+    it 'should call all subscriber functions given they all subscribed for the matching event name', ->
+      payload = {}
+      subscriberFunction = sandbox.stub()
+      anotherSubscriberFunction = sandbox.stub()
+      pubSub.subscribe 'event', subscriberFunction
+      .then ->
+        pubSub.subscribe 'event', anotherSubscriberFunction
+      .then ->
+        pubSub.publish 'event', payload
+      .then ->
+        expect(subscriberFunction).to.have.been.called
+        expect(anotherSubscriberFunction).to.have.been.called
 
-      pubSub.subscribe 'Event1', subscriberStub1
-      pubSub.subscribe 'Event1', subscriberStub2
 
-      pubSub.publish 'Event1', {}
-      expect(subscriberStub1).to.have.been.called
-      expect(subscriberStub2).to.have.been.called
+    it 'should not call a subscriber function given it subscribed for an event with another name', ->
+      payload = {}
+      subscriberFunction = sandbox.stub()
+      pubSub.subscribe 'event2', subscriberFunction
+      .then ->
+        pubSub.publish 'event1', payload
+      .then ->
+        expect(subscriberFunction).to.have.not.been.called
 
 
-  describe '#unsubscribe', ->
+    it 'should reject with an error given the subscriber function throws an error', ->
+      payload = {}
+      thrownError = new Error
+      subscriberFunction = -> throw thrownError
+      pubSub.subscribe 'event', subscriberFunction
+      .then ->
+        pubSub.publish 'event', payload
+      .catch (receivedError) ->
+        expect(receivedError).to.equal thrownError
 
-    it 'should unsubscribe the subscriber with the given subscriber id', ->
-      publishedEvent = {}
-      spy = sandbox.spy()
-      pubSub.subscribe 'SomeEvent', spy
+
+    it 'should reject with an error given the subscriber function rejects with an error', ->
+      payload = {}
+      rejectedError = new Error
+      subscriberFunction = -> Promise.reject rejectedError
+      pubSub.subscribe 'event', subscriberFunction
+      .then ->
+        pubSub.publish 'event', payload
+      .catch (receivedError) ->
+        expect(receivedError).to.equal rejectedError
+
+
+    it 'should wait to resolve given the subscriber function takes some time to resolve', ->
+      payload = {}
+      subscriberFunctionHasFinished = false
+      subscriberFunction = ->
+        new Promise (resolve) ->
+          setTimeout ->
+            subscriberFunctionHasFinished = true
+            resolve()
+          , 15
+      pubSub.subscribe 'event', subscriberFunction
+      .then ->
+        pubSub.publish 'event', payload
+      .then ->
+        expect(subscriberFunctionHasFinished).to.be.true
+
+
+    it 'should wait to publish the event given a previous publish operation is not finished yet', ->
+      payload1 = {}
+      payload2 = {}
+
+      subscriberFinishedFunction = sandbox.stub()
+      subscriberFunction = ->
+        new Promise (resolve) ->
+          setTimeout ->
+            subscriberFinishedFunction()
+            resolve()
+          , 15
+
+      anotherSubscriberFunction = sandbox.stub()
+
+      pubSub.subscribe 'event1', subscriberFunction
+      .then ->
+        pubSub.subscribe 'event2', anotherSubscriberFunction
+      .then ->
+        pubSub.publish 'event1', payload1
+        pubSub.publish 'event2', payload2
+      .then ->
+        expect(subscriberFinishedFunction).to.have.been.calledBefore anotherSubscriberFunction
+
+
+    it 'should publish the event although a previous publish operation has failed', ->
+      payload1 = {}
+      payload2 = {}
+      subscriberFunction = -> Promise.reject new Error
+      anotherSubscriberFunction = sandbox.stub()
+      pubSub.subscribe 'event1', subscriberFunction
+      .then ->
+        pubSub.subscribe 'event2', anotherSubscriberFunction
+      .then ->
+        pubSub.publish 'event1', payload1
+        pubSub.publish 'event2', payload2
+      .then ->
+        expect(anotherSubscriberFunction).to.have.been.called
+
+
+    it 'should not call the subscriber function given it unsubscribed after subscribing', ->
+      payload = {}
+      subscriberFunction = sandbox.stub()
+      pubSub.subscribe 'event', subscriberFunction
       .then (subscriberId) ->
         pubSub.unsubscribe subscriberId
       .then ->
-        pubSub.publish 'SomeEvent', publishedEvent
+        pubSub.publish 'event', payload
       .then ->
-        expect(spy).not.to.have.been.called
+        expect(subscriberFunction).to.have.not.been.called
 
 
-    it 'should not unsubscribe subscribers with another id than the given one', ->
-      spy = sandbox.spy()
-      pubSub.subscribe 'Event1', spy
-      pubSub.unsubscribe 'unknown-subscriber-id'
-      pubSub.publish 'Event1', {}
-      expect(spy).to.have.been.called
+  describe 'destroying the pub sub', ->
+
+    it 'should reject with an error when publishing after destroying the pub sub', ->
+      payload = foo: 'bar'
+      pubSub.destroy()
+      .then ->
+        pubSub.publish 'event', payload
+      .catch (error) ->
+        expect(error).to.be.an.instanceOf Error
+        expect(error.message).to.match /"foo"\s*:"bar"/
+
+
+    it 'should wait to resolve given a previous publish operation has not finished yet', ->
+      payload = {}
+
+      subscriberFinishedFunction = sandbox.stub()
+      subscriberFunction = ->
+        new Promise (resolve) ->
+          setTimeout ->
+            subscriberFinishedFunction()
+            resolve()
+          , 15
+
+      pubSub.subscribe 'event', subscriberFunction
+      .then ->
+        pubSub.publish 'event', payload
+        pubSub.destroy()
+      .then ->
+        expect(subscriberFinishedFunction).to.have.been.called
+
+
+    it 'should wait to resolve given a previous ongoing publish operation will trigger another publish operation', ->
+      payload1 = {}
+      payload2 = {}
+
+      handleFunction =  ->
+        new Promise (resolve) ->
+          setTimeout ->
+            pubSub.publish 'event2', payload2
+            resolve()
+          , 15
+      anotherSubscriberFunction = sandbox.stub()
+
+      pubSub.subscribe 'event1', handleFunction
+      .then ->
+        pubSub.subscribe 'event2', anotherSubscriberFunction
+      .then ->
+        pubSub.publish 'event1', payload1
+        pubSub.destroy()
+      .then ->
+        expect(anotherSubscriberFunction).to.have.been.called
+
