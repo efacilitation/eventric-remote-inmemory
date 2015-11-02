@@ -12,7 +12,7 @@ module.exports = (gulp) ->
 
 
   gulp.task 'specs:server', ->
-    gulp.src 'src/*.coffee'
+    gulp.src 'src/**/*.coffee'
     .pipe mocha()
 
 
