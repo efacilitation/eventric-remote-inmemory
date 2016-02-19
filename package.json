@@ -28,12 +28,12 @@
     "gulp-util": "3.0.6",
     "karma": "0.12.37",
     "karma-mocha": "0.2.0",
-    "karma-phantomjs-launcher": "0.2.0",
+    "karma-phantomjs-launcher": "1.0.0",
     "karma-spec-reporter": "0.0.20",
     "mocha": "2.2.5",
-    "phantomjs": "1.9.17",
+    "phantomjs-prebuilt": "2.1.4",
     "run-sequence": "1.1.2",
-    "sinon": "git://github.com/cjohansen/Sinon.JS#sinon-2.0",
+    "sinon": "https://github.com/sinonjs/sinon.git#cee9ac9",
     "sinon-chai": "2.8.0",
     "webpack-stream": "2.1.0"
   }
