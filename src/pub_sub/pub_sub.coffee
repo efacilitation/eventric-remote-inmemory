@@ -17,7 +17,8 @@ class PubSub
 
   publish: (eventName, payload) ->
     subscribers = @_getRelevantSubscribers eventName
-    return Promise.all subscribers.map (subscriber) -> subscriber.subscriberFunction payload
+    return Promise.all subscribers.map (subscriber) ->
+      return subscriber.subscriberFunction payload
 
 
   _getRelevantSubscribers: (eventName) ->
